@@ -12,7 +12,7 @@ public class BookService {
 
     public BookService() {
     }
-    
+
     public void setPrice(GeneralBook generalBook, double price){
         if(generalBook.getPopularity() > 9){
             generalBook.setPrice(price * 1.2);

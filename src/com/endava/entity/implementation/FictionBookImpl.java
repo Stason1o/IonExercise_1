@@ -1,17 +1,17 @@
-package com.endava.entity;
+package com.endava.entity.implementation;
 
-import com.endava.generalclasses.GeneralBook;
+import com.endava.entity.Book;
 
 /**
  * Created by sbogdanschi on 20/03/2017.
  */
-public class FictionBook extends GeneralBook{
+public class FictionBookImpl extends Book {
     private String fantasyParameter;
 
-    public FictionBook() {
+    public FictionBookImpl() {
     }
 
-    public FictionBook(byte popularity, int pagesQuant, double price, String bookName, String authorName, int year, String fantasyParameter) {
+    public FictionBookImpl(byte popularity, int pagesQuant, double price, String bookName, String authorName, int year, String fantasyParameter) {
         super(popularity, pagesQuant, price, bookName, authorName, year);
         this.fantasyParameter = fantasyParameter;
     }
@@ -30,7 +30,7 @@ public class FictionBook extends GeneralBook{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        FictionBook that = (FictionBook) o;
+        FictionBookImpl that = (FictionBookImpl) o;
 
         return fantasyParameter.equals(that.fantasyParameter);
 
@@ -45,7 +45,7 @@ public class FictionBook extends GeneralBook{
 
     @Override
     public String toString() {
-        return "FictionBook" + super.toString() +
+        return "FictionBookImpl" + super.toString() +
                 ", fantasyParameter='" + fantasyParameter + '\'' +
                 '}';
     }

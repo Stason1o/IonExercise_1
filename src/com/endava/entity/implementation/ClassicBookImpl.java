@@ -1,17 +1,17 @@
-package com.endava.entity;
+package com.endava.entity.implementation;
 
-import com.endava.generalclasses.GeneralBook;
+import com.endava.entity.Book;
 
 /**
  * Created by sbogdanschi on 20/03/2017.
  */
-public class ClassicBook extends GeneralBook{
+public class ClassicBookImpl extends Book {
     private String classicParameter;
 
-    public ClassicBook() {
+    public ClassicBookImpl() {
     }
 
-    public ClassicBook(byte popularity, int pagesQuant, double price, String bookName, String authorName, int year, String classicParameter) {
+    public ClassicBookImpl(byte popularity, int pagesQuant, double price, String bookName, String authorName, int year, String classicParameter) {
         super(popularity, pagesQuant, price, bookName, authorName, year);
         this.classicParameter = classicParameter;
     }
@@ -30,7 +30,7 @@ public class ClassicBook extends GeneralBook{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        ClassicBook that = (ClassicBook) o;
+        ClassicBookImpl that = (ClassicBookImpl) o;
 
         return classicParameter.equals(that.classicParameter);
 
@@ -45,7 +45,7 @@ public class ClassicBook extends GeneralBook{
 
     @Override
     public String toString() {
-        return "ClassicBook" + super.toString() +
+        return "ClassicBookImpl" + super.toString() +
                 "classicParameter='" + classicParameter + '\'' +
                 '}';
     }

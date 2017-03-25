@@ -1,11 +1,13 @@
 package com.endava.service;
 
-import com.endava.entity.ClassicBook;
-import com.endava.entity.FictionBook;
-import com.endava.entity.PureBook;
-import com.endava.entity.ScienceBook;
-import com.endava.generalclasses.GeneralBook;
-import com.endava.generalclasses.PriceStrategy;
+import com.endava.entity.enums.BookType;
+import com.endava.entity.enums.PriceStrategyType;
+import com.endava.entity.implementation.ClassicBookImpl;
+import com.endava.entity.implementation.FictionBookImpl;
+import com.endava.entity.implementation.PureBookImpl;
+import com.endava.entity.implementation.ScienceBookImpl;
+import com.endava.entity.Book;
+import com.endava.entity.PriceStrategy;
 
 /**
  * Created by sbogdanschi on 20/03/2017.
@@ -13,7 +15,7 @@ import com.endava.generalclasses.PriceStrategy;
 public class BookFactory implements PriceStrategy{
 
 
-    public GeneralBook getBook(String bookType,String priceStrategy,
+    public Book createBook(BookType bookType, PriceStrategyType priceStrategyType,
                                byte popularity,
                                int pagesQuant,
                                double price,
@@ -21,31 +23,28 @@ public class BookFactory implements PriceStrategy{
                                String authorName,
                                int year,
                                String classicParameter) {
-        if (bookType == null) {
-            return null;
-        }
-        if(priceStrategy.equalsIgnoreCase("Normal")) {
-            if (bookType.equalsIgnoreCase("Classic Book")) {
-                return generateSimplePrice(new ClassicBook(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
+        if(priceStrategyType == PriceStrategyType.NORMAL) {
+            if (bookType == BookType.CLASSIC) {
+                return generateSimplePrice(new ClassicBookImpl(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
             }
-            if (bookType.equalsIgnoreCase("Fiction Book")) {
-                return generateSimplePrice(new FictionBook(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
+            if (bookType == BookType.FICTION) {
+                return generateSimplePrice(new FictionBookImpl(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
             }
-            if (bookType.equalsIgnoreCase("Science Book")) {
-                return generateSimplePrice(new ScienceBook(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
+            if (bookType == BookType.SCIENCE) {
+                return generateSimplePrice(new ScienceBookImpl(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
             } else {
                 System.out.println("There is no such book. Possible variants: \"Classic Book\", \"Fiction Book\", \"Science Book\"");
                 return null;
             }
-        }else if(priceStrategy.equalsIgnoreCase("Special")){
-            if (bookType.equalsIgnoreCase("Classic Book")) {
-                return generateSpecialPrice(new ClassicBook(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
+        }else if(priceStrategyType == PriceStrategyType.SPECIAL){
+            if (bookType == BookType.CLASSIC) {
+                return generateSpecialPrice(new ClassicBookImpl(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
             }
-            if (bookType.equalsIgnoreCase("Fiction Book")) {
-                return generateSpecialPrice(new FictionBook(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
+            if (bookType == BookType.FICTION) {
+                return generateSpecialPrice(new FictionBookImpl(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
             }
-            if (bookType.equalsIgnoreCase("Science Book")) {
-                return generateSpecialPrice(new ScienceBook(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
+            if (bookType == BookType.FICTION) {
+                return generateSpecialPrice(new ScienceBookImpl(popularity, pagesQuant, price, bookName, authorName, year, classicParameter));
             } else {
                 System.out.println("There is no such book. Possible variants: \"Classic Book\", \"Fiction Book\", \"Science Book\"");
                 return null;
@@ -56,45 +55,45 @@ public class BookFactory implements PriceStrategy{
         }
     }
 
-    public PureBook getBook(PureBook pureBook){
-        if(pureBook.getPopularity() == 8) {
-            pureBook.setPrice(pureBook.getPrice() - pureBook.getPrice() * 0.1);
-            return pureBook;
-        }else if(pureBook.getPopularity() >= 9){
-            pureBook.setPrice(pureBook.getPrice() - pureBook.getPrice() * 0.2);
-            return pureBook;
-        }else if(pureBook.getPopularity() < 4){
-            pureBook.setPrice(pureBook.getPrice() + pureBook.getPopularity() * 0.1);
-            return pureBook;
-        }else return pureBook;
+    public PureBookImpl createPureBook(Book book){
+        if(book.getPopularity() == 8) {
+            book.setPrice(book.getPrice() - book.getPrice() * 0.1);
+            return (PureBookImpl) book;
+        }else if(book.getPopularity() >= 9){
+            book.setPrice(book.getPrice() - book.getPrice() * 0.2);
+            return (PureBookImpl) book;
+        }else if(book.getPopularity() < 4){
+            book.setPrice(book.getPrice() + book.getPopularity() * 0.1);
+            return (PureBookImpl) book;
+        }else return (PureBookImpl) book;
     }
 
     @Override
-    public GeneralBook generateSimplePrice(GeneralBook generalBook) {
-        if(generalBook.getPopularity() > 9){
-            generalBook.setPrice(generalBook.getPrice() * 1.2);
-            return generalBook;
-        } else if(generalBook.getPopularity() < 4){
-            generalBook.setPrice(generalBook.getPrice() - 0.1 * generalBook.getPrice());
-            return generalBook;
-        }else return generalBook;
+    public Book generateSimplePrice(Book book) {
+        if(book.getPopularity() > 9){
+            book.setPrice(book.getPrice() * 1.2);
+            return book;
+        } else if(book.getPopularity() < 4){
+            book.setPrice(book.getPrice() - 0.1 * book.getPrice());
+            return book;
+        }else return book;
     }
 
     @Override
-    public GeneralBook generateSpecialPrice(GeneralBook generalBook) {
+    public Book generateSpecialPrice(Book book) {
         int chance = (int)Math.random() * 1;
-        if(generalBook.getPopularity() > 8 && generalBook.getPopularity() <= 9){
-            generalBook.setPrice(generalBook.getPrice() * 1.1);
-            return generalBook;
-        } else if(generalBook.getPopularity() <= 1 && !(generalBook instanceof FictionBook)){
+        if(book.getPopularity() > 8 && book.getPopularity() <= 9){
+            book.setPrice(book.getPrice() * 1.1);
+            return book;
+        } else if(book.getPopularity() <= 1 && !(book instanceof FictionBookImpl)){
             if(chance == 0) {
-                generalBook.setPrice(generalBook.getPrice() - 0.1 * generalBook.getPrice());
-                return generalBook;
+                book.setPrice(book.getPrice() - 0.1 * book.getPrice());
+                return book;
             }else {
-                generalBook.setPrice(0);
-                return generalBook;
+                book.setPrice(0);
+                return book;
             }
-        }else return generalBook;
+        }else return book;
     }
 
 }

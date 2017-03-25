@@ -1,11 +1,9 @@
-package com.endava.generalclasses;
-
-import com.endava.service.BookService;
+package com.endava.entity;
 
 /**
  * Created by sbogdanschi on 20/03/2017.
  */
-public abstract class GeneralBook {
+public abstract class Book {
     protected byte popularity;
     protected int pagesQuant;
     protected double price;
@@ -13,10 +11,10 @@ public abstract class GeneralBook {
     protected String authorName;
     protected int year;
 
-    public GeneralBook() {
+    public Book() {
     }
 
-    public GeneralBook(byte popularity, int pagesQuant, double price, String bookName, String authorName, int year) {
+    public Book(byte popularity, int pagesQuant, double price, String bookName, String authorName, int year) {
         this.setPopularity(popularity);
         this.setPagesQuant(pagesQuant);
         this.setPrice(price);
@@ -78,7 +76,7 @@ public abstract class GeneralBook {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GeneralBook that = (GeneralBook) o;
+        Book that = (Book) o;
 
         if (popularity != that.popularity) return false;
         if (pagesQuant != that.pagesQuant) return false;

@@ -1,17 +1,17 @@
-package com.endava.entity;
+package com.endava.entity.implementation;
 
-import com.endava.generalclasses.GeneralBook;
+import com.endava.entity.Book;
 
 /**
  * Created by sbogdanschi on 20/03/2017.
  */
-public class ScienceBook extends GeneralBook{
+public class ScienceBookImpl extends Book {
     private String scienceParameter;
 
-    public ScienceBook() {
+    public ScienceBookImpl() {
     }
 
-    public ScienceBook(byte popularity, int pagesQuant, double price, String bookName, String authorName, int year, String scienceParameter) {
+    public ScienceBookImpl(byte popularity, int pagesQuant, double price, String bookName, String authorName, int year, String scienceParameter) {
         super(popularity, pagesQuant, price, bookName, authorName, year);
         this.scienceParameter = scienceParameter;
     }
@@ -30,7 +30,7 @@ public class ScienceBook extends GeneralBook{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        ScienceBook that = (ScienceBook) o;
+        ScienceBookImpl that = (ScienceBookImpl) o;
 
         return scienceParameter.equals(that.scienceParameter);
 
@@ -45,7 +45,7 @@ public class ScienceBook extends GeneralBook{
 
     @Override
     public String toString() {
-        return "ScienceBook" + super.toString() +
+        return "ScienceBookImpl" + super.toString() +
                 ", scienceParameter='" + scienceParameter + '\'' +
                 '}';
     }
